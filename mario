@@ -41,12 +41,13 @@ while PROMPT != "q":
                 pu = ((0.25 * defacto_speed) * i) / PU_SIZE
                 position = 0
             elif abs((quarter_step + position) % PU_SIZE - PU_SIZE) < ISLAND:
-                pu = (0.25 * defacto_speed) * i
+                pu = ((0.25 * defacto_speed) * i) / PU_SIZE
                 position = ((0.25 * defacto_speed + position) % PU_SIZE) - PU_SIZE
             else:
                 print("\nQuarter step", i, "is invalid!")  # i is the step number
-                pu = (0.25 * defacto_speed) * i
+                pu = ((0.25 * defacto_speed) * i) / PU_SIZE
                 position = ((0.25 * defacto_speed + position) % PU_SIZE) - PU_SIZE
+                break
         print("\nMario has travelled", pu, "PUs")  # print PUs
         print("Mario's position in this PU:", position)
     else:
