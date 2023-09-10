@@ -45,11 +45,9 @@ while PROMPT != "q":
                 position = ((0.25 * defacto_speed + position) % PU_SIZE) - PU_SIZE
             else:
                 print("\nQuarter step", i, "is invalid!")  # i is the step number
-                pu = ((0.25 * defacto_speed) * i) / PU_SIZE
-                position = ((0.25 * defacto_speed + position) % PU_SIZE) - PU_SIZE
                 break
-        print("\nMario has travelled", pu, "PUs")  # print PUs
-        print("Mario's position in this PU:", position)
+        print("\nMario has travelled", round(pu), "PUs")  # print PUs
+        print("Mario's position in this PU:", round(position))
     else:
         while True:
             health = int(input("\nWhat is Mario's current HP? "))
