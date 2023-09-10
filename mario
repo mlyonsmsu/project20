@@ -1,0 +1,74 @@
+import math
+
+PROMPT = \
+    input("\nSelect one of the following options:\n\
+    1: Speed calculator\n\
+    2: Parallel Universe navigator\n\
+    3: Scuttlebug transportation\n\
+    q: Exit the program\n\
+    Option: ")
+
+PU_SIZE = 65535
+ISLAND = 1000
+SCUTTLEBUG_RADIUS = 10
+
+qpu = 0
+pu = 0
+angle = 0
+speed = 0
+defacto_speed = 0
+quarter_step = 0
+position = 0
+health = 0
+distance = 0
+
+
+while PROMPT != "q":
+    if PROMPT == "1":
+        qpu = int(input("\nHow many QPUs do you want to travel? "))
+        angle = float(input("\nWhat is the angle of the slope on which Mario is standing? "))
+        pu = 4 * qpu
+        speed = round(65535 * pu / math.cos(angle))
+        print("\nMario needs",speed,"speed")
+    elif PROMPT == "2":
+        angle = float(input("\nWhat is the angle of the slope on which Mario is standing? "))
+        speed = int(input("\nWhat is Mario's speed? "))
+        position = 0
+        defacto_speed = speed * math.cos(angle)
+        quarter_step = 0.25 * defacto_speed
+        for i in range(1, 5, 1):
+            if quarter_step == PU_SIZE:
+                pu = ((0.25 * defacto_speed) * i) / PU_SIZE
+                position = 0
+            elif abs((quarter_step + position) % PU_SIZE - PU_SIZE) < ISLAND:
+                pu = (0.25 * defacto_speed) * i
+                position = ((0.25 * defacto_speed + position) % PU_SIZE) - PU_SIZE
+            else:
+                print("\nQuarter step", i, "is invalid!")  # i is the step number
+                pu = (0.25 * defacto_speed) * i
+                position = ((0.25 * defacto_speed + position) % PU_SIZE) - PU_SIZE
+        print("\nMario has travelled", pu, "PUs")  # print PUs
+        print("Mario's position in this PU:", position)
+    else:
+        while True:
+            health = int(input("\nWhat is Mario's current HP? "))
+            if health < 1 or health > 8:
+                print("\nInvalid amount of HP!")
+            else:
+                coin_distance = int(input("\nAt what distance is the coin placed? Enter -1 if there is no coin. "))
+                while health >= 1:
+                    if distance == coin_distance:
+                        health += 1
+                    distance += SCUTTLEBUG_RADIUS
+                    health -= 1
+                print("\nThe Scuttlebug can be transported", distance, "units of distance")
+                break
+    PROMPT = \
+        input("\nSelect one of the following options:\n\
+                1: Speed calculator\n\
+                2: Parallel Universe navigator\n\
+                3: Scuttlebug transportation\n\
+                q: Exit the program\n\
+                Option: ")
+
+
